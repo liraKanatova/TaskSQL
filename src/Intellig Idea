@@ -1,0 +1,178 @@
+CREATE TABLE job
+(
+    id          SERIAL PRIMARY KEY,
+    professions VARCHAR NOT NULL
+
+);
+CREATE TABLE employee
+(
+    id            SERIAL PRIMARY KEY,
+    first_name    VARCHAR(50) NOT NULL,
+    last_name     VARCHAR(50) NOT NULL,
+    email         VARCHAR(50) UNIQUE,
+    date_of_birth DATE,
+    job_id        INTEGER REFERENCES job (id)
+
+);
+SELECT *
+FROM job;
+
+SELECT *
+FROM employee;
+
+INSERT INTO job(professions)
+VALUES ('Teacher'),
+       ('Lawyer'),
+       ('Doctor'),
+       ('Economist');
+
+
+INSERT INTO employee(first_name, last_name, email, date_of_birth, job_id)
+VALUES ('Alex', 'Ax', 'Alex_@.gmail.com', '2000-7-5', 1 ),
+       ('Sara', 'Sa', 'Sara_@.gmail.com', '2001-3-9', 2),
+       ('Nik', 'Ni', 'Nik_@.gmail.com', '2002-8-10', 4),
+       ('Alan', 'Alanov', 'Alan_@.gmail.com', '2003-2-9', 3);
+
+
+SELECT * FROM job;
+SELECT * FROM employee;
+
+CREATE TABLE account(
+    id_account INT PRIMARY KEY ,
+    name VARCHAR(50),
+    position VARCHAR(100),
+    salary DECIMAL,
+    date_of_employment DATE ,
+    gender CHAR(1)
+
+);
+SELECT * FROM account;
+INSERT INTO account(id_account, name, position, salary, date_of_employment, gender)
+VALUES(1,'Johnson','Manager','5000.00','01.02.2128','M'),
+      (2,'Nik ','Clerk','4000.00','02.03.2125','M'),
+      (3,'Sara','Secretary','5500.00','01.08.2127','F'),
+      (4,'Ana','Recruiter','4200.00','22.07.2125','F');
+
+CREATE TABLE Authors
+(
+    Id SERIAL PRIMARY KEY ,
+    Name VARCHAR(70) NOT NULL ,
+    Country VARCHAR(100) NOT NULL
+
+);
+
+INSERT INTO Authors
+(Id, Name, Country)
+VALUES
+(1,'J.D.Salinger','USA'),
+(2,'F.Scott.Fitzgerald','USA'),
+(3,'Jane Austen','UK'),
+(4,'Scott Hanselman','USA'),
+(5,'Jason N.Gaylord','USA'),
+(6,'Pranav Rastogi','India'),
+(7,'Todd Miramda','USA'),
+(8,'Christian Wenz','USA');
+
+CREATE TABLE Books
+(
+    Id SERIAL PRIMARY KEY ,
+    Title VARCHAR(50) NOT NULL ,
+    PRIMARY KEY (Id)
+
+);
+INSERT INTO Books
+(Id, Title)
+VALUES (1,'The Catcher in the Rye'),
+       (2,'Nine Stories'),
+       (3,'Franny and Zooey'),
+       (4,'The Great Gatsby'),
+       (5,'Tender id the Night'),
+       (6,'Pride and Prejudice'),
+       (7,'Professional ASP.NET 4.5 in C# and VB');
+
+CREATE TABLE BooksAuthors
+(
+    AuthorId SERIAL PRIMARY KEY ,
+    BookId SERIAL PRIMARY KEY ,
+    FOREIGN KEY (AuthorId) REFERENCES Authors(Id),
+    FOREIGN KEY (BookId) REFERENCES Books(Id)
+
+);
+INSERT INTO BooksAuthors
+( BookId,AuthorId)
+VALUES (1,1),
+       (2,1),
+       (3,1),
+       (4,2),
+       (5,2),
+       (6,3),
+       (7,4),
+       (7,5),
+       (7,6),
+       (7,7),
+       (7,8);
+
+
+SELECT * FROM Authors;
+SELECT * FROM Books;
+SELECT * FROM BooksAuthors;
+
+
+CREATE TABLE Countries
+(
+    Id SERIAL PRIMARY KEY ,
+    ISO VARCHAR(2) NOT NULL ,
+    ISO3 VARCHAR(3) NOT NULL ,
+    ISONumber VARCHAR(100) NOT NULL ,
+    CountryName VARCHAR(100) NOT NULL ,
+    Capital VARCHAR(100) NOT NULL ,
+    ContinentCode VARCHAR(2) NOT NULL ,
+    CurrencyCode VARCHAR(3) NOT NULL
+);
+INSERT INTO Countries
+(ISO, ISO3, ISONumber,CountryName, Capital, ContinentCode, CurrencyCode)
+VALUES
+    ('AU','AUS',36,'Australia','Canberra','OC','AUD'),
+    ('DE','DEU',276,'Germany','Berlin','US','EUR'),
+    ('IN','IND',356,'India','New Delhi','AS','INR'),
+    ('LA','LAO',418,'Laos','Vientiane','AS','LAK'),
+    ('US','USA',840,'United States' ,'Washington','NA','USD'),
+    ('ZW','ZWE',716,'Zimbabwe','Harare','AF','ZWL');
+
+CREATE TABLE Customer
+(
+   customer_id SERIAL PRIMARY KEY ,
+    first_name VARCHAR(70) NOT NULL ,
+    last_name VARCHAR(70) NOT NULL ,
+    favorite_website VARCHAR(50) NOT NULL
+
+);
+
+
+INSERT INTO customer
+(customer_id, first_name, last_name, favorite_website)
+VALUES(4000,'Justin','Bieber','google.com'),
+      (5000,'Selena','Gomez','bing.com'),
+      (6000,'Mila','Kunis','yahoo.com'),
+      (7000,'Tom','Cruise','oracle.com'),
+      (8000,'Jphnny','Depp','google.com'),
+      (9000,'Russell','Crowe','bing.com');
+
+CREATE TABLE orders
+(
+    order_id SERIAL PRIMARY KEY ,
+    customer_id INTEGER REFERENCES customer(customer_id),
+    order_date DATE NOT NULL
+);
+
+INSERT INTO orders
+(customer_id, order_date)
+VALUES(7000,'2019-06-18'),
+      (5000,'2019-06-18'),
+      (9000,'2019-06-19'),
+      (4000,'2019-06-20'),
+      (6000,'2019-07-01');
+
+SELECT * FROM customer;
+SELECT * FROM orders;
+
